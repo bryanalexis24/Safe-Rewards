@@ -5,7 +5,7 @@ const BUDGET_DATA = [
 		cost: "600", // Dollar amount
 		aside: "15", // Dollar amount
         freq: 4, // Days
-        date: "2024-30-5",
+        date: "2024-30-05",
 	},
 	{
 		id: 2,
@@ -13,7 +13,7 @@ const BUDGET_DATA = [
 		cost: "100", // Dollar amount
 		aside: "8", // Dollar amount
         freq: 7, // Days
-        date: "2024-16-6",
+        date: "2024-16-06",
 	},
 ];
 

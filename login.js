@@ -1,24 +1,24 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-  // Retrieve the users from local storage
-  const users = JSON.parse(localStorage.getItem('users')) || [];
+    // Retrieve the users from local storage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-  // Find the user
-  const user = users.find(user => user.email === email && user.password === password);
+    // Find the user
+    const user = users.find(user => user.email === email && user.password === password);
 
-  if (user) {
-    // Login successful
-    document.getElementById('message').textContent = 'Login successful';
-    // Redirect to the budget page
-    window.location.href = 'budget.html';
-  } else {
-    // Login unsuccessful
-    document.getElementById('message').textContent = 'Invalid email or password';
-  }
+    if (user) {
+        // Login successful
+        document.getElementById('message').textContent = 'Login successful';
+        // Redirect to the budget page
+        window.location.href = 'budget.html';
+    } else {
+        // Login unsuccessful
+        document.getElementById('message').textContent = 'Invalid email or password';
+    }
 });
 
 /*document.getElementById('loginForm').addEventListener('submit', async function(event) {
@@ -51,4 +51,3 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
       document.getElementById('message').textContent = 'Login unsuccessful';
     }
   }); */
-  

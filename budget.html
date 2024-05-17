@@ -1,119 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Budget Management Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    /* Additional styles for the slider track */
+    <style>
+        .slider::-webkit-slider-runnable-track {
+            height: 8px;
+            background: linear-gradient(to right, green var(--range-value, 0%), red var(--range-value, 0%));
+        }
+
+        .slider::-moz-range-track {
+            height: 8px;
+            background: linear-gradient(to right, green var(--range-value, 0%), red var(--range-value, 0%));
+        }
+    </style>
+
 </head>
-<body>
-<!-- component -->
-<!-- Include Tailwind CSS -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<!-- AlpineJS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.8.1/cdn.min.js" defer></script>
 
-<style>
-        /* Slider */
+<body class="bg-gray-900">
+    <div class="flex flex-col items-center 
+				justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg 
+					shadow-lg max-w-md w-full">
+            <h2 class="text-2xl font-semibold 
+					text-gray-800 mb-4">
+                Budget Planner
+            </h2>
+            <form id="budgetForm">
+                <label for="title" class="text-gray-700">
+                    Plan title:
+                </label>
+                <input type="text" id="title" name="title" class="w-full border border-green-500
+                        rounded-lg p-2 mb-4">
 
-        .x-slider * {
-            width: 350px !important;
-        }
-
-        .x-slider input::-webkit-slider-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #636363;
-            border: 5px solid #24c55d;
-            box-shadow: 0px 0px 40px -4px rgba(0, 0, 0, 0.76);
-            transition: all 0.1s ease-in-out;
-            outline: none;
-            appearance: none;
-        }
-
-        .x-slider input::-webkit-slider-thumb:hover {
-            border-color: #1bb350;
-        }
-</style>
-
-<!-- Story Bar Container -->
-<div class="flex flex-col items-center justify-center mt-52">
-    <!-- App -->
-    <div class="bg-white p-10 rounded-md shadow-lg" x-cloak x-data="appData()" x-init="appInit()">
-        <!-- Player -->
-        <div class="relative">
-            <!-- Player Slider Container -->
-            <div class="x-slider flex relative my-3">
-                <!-- Player Slider -->
-                <div class="x-slider inline justify-center rounded-md">
-                    <!-- Range Input -->
-                    <input class="absolute bg-transparent rounded-md
-                        z-10 h-1 w-80 outline-0 appearance-none" type="range"
-                        step="1" min='0' max="100" value="0"
-                        x-model="sliderValue"
-                        x-on:change.debounce="sliderProgressTime = sliderProgressToTime(sliderValue, songLength)">
-
-                    <!-- Slider Placeholder -->
-                    <div class="absolute z-0 w-80 h-0.5 mt-0.5 rounded-md bg-gray-500/70"></div>
-
-                    <!-- Progress -->
-                    <div class="absolute z-0 w-80 h-1.5 rounded-md bg-green-600
-                        bg-gradient-to-r from-emerald-700 to-green-500"
-                        x-bind:style="'width: ' + (sliderValue * 3.5) + 'px !important; '"></div>
-                    <!-- x-slider is width 350px -->
+                <label for="cost" class="text-gray-700">
+                    Cost of Item:
+                </label>
+                <div class="relative mb-4">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                    <input type="number" id="cost_of_item" name="cost_of_item"
+                        class="w-full pl-8 border border-green-500 rounded-lg p-2">
                 </div>
-            </div>
 
-            <!-- Duration Container -->
-            <div class="flex flex-row flex-grow justify-start px-0.5">
-                <!-- Current Time -->
-                <div class="text-gray-500/90 text-sm select-none" x-text="sliderProgressTime"></div>
 
-                <!-- Grow Space -->
-                <div class="grow"></div>
+                <label for="expenseInc" class="text-gray-700">
+                    How much money will you set aside weekly?:
+                </label>
+                <div class="relative mb-4">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                    <input type="number" id="expenseInc" name="expenseInc"
+                        class="w-full pl-8 border border-green-500 rounded-lg p-2">
+                </div>
 
-                <!-- Total Time -->
-                <div class="text-gray-400/90 text-sm select-none pr-1" x-text="secondsToDuration(songLength)"></div>
-            </div>
+                <label for="daysInterval" class="text-gray-700">
+                    How often will you set money aside? (days):
+                </label>
+                <div class="relative mb-4">
+                    <input type="number" id="daysInterval" name="daysInterval"
+                        class="w-full pr-16 border border-green-500 rounded-lg p-2">
+                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">Days</span>
+                </div>
+
+
+                <label for="expenseCategory" class="text-gray-700">
+                    Date you plan to purchase the item:
+                </label>
+                <input type="date" id="purchase_date" name="purchase_date" class="w-full border border-green-500
+                                rounded-lg p-2 mb-4">
+
+                <!--SLIDER HERE!-->
+
+                <!--<label for="Slider" class="text-gray-700">
+                    Check if your plan is in your budget:
+                </label>
+
+                <div class="mb-4"></div>-->
+
+                <!-- SLIDER HERE! -->
+                <!-- <div class="relative mb-6">
+                        <label for="labels-range-input" class="sr-only">Labels range</label>
+                        <input id="labels-range-input" type="range" value="1000" min="100" max="1500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        <div class="flex justify-between mt-2">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Min ($100)</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">$500</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">$1000</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Max ($1500)</span>
+                        </div>
+                    </div> -->
+
+                <label for="min_balance" class="text-gray-700">
+                    Minimum Account Balance:
+                </label>
+                <div class="relative mb-4">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                    <input type="number" id="min_balance" name="min_balance"
+                        class="w-full pl-8 border border-green-500 rounded-lg p-2">
+                </div>
+
+                <label for="Slider" class="text-gray-700">Check if your plan is in your budget:</label>
+                <div class="relative mb-6">
+                    <label for="labels-range-input" class="sr-only">Labels range</label>
+                    <input id="labels-range-input" type="range" value="1000" min="100" max="1500"
+                        class="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between mt-2">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Min ($100)</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">$500</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">$1000</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Max ($1500)</span>
+                    </div>
+                </div>
+
+                <!-- Space after the slider -->
+                <div class="mb-4"></div>
+                <button type="submit" id="addExpense"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 w-full mb-4">
+                    Add Plan
+                </button>
+                <div id="expenseList" class="mb-4"></div>
+
+                <style>
+                    /* center the notification */
+                    .notification {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                </style>
+
+                <script>
+                    document.getElementById('addExpense').addEventListener('click', function () {
+                        // For demonstration assume the plan is added successfully
+
+                        const notification = document.createElement('div');
+                        notification.textContent = 'Your plan was created';
+                        notification.classList.add('bg-green-500', 'text-white', 'p-2', 'rounded-lg', 'mb-4', 'text-center', 'notification');
+                        document.body.appendChild(notification);
+
+                        // remove notification after a period of time (3 sec)
+                        setTimeout(function () {
+                            document.body.removeChild(notification);
+                        }, 3000);
+                    });
+                </script>
         </div>
-    </div>
 
-    <!-- Notes -->
-    <span class="text-center font-bold my-20">
-        <a href="https://egoistdeveloper.github.io/twcss-to-sass-playground/" target="_blank" class="text-blue-600">
-            Convetert to SASS
-        </a>
-    </span>
-</div>
-
-<script>
-    function appData() {
-        return {
-            sliderValue: 50,
-            songLength: 250,
-            sliderProgressTime: '00:00',
-
-            appInit() {
-                this.sliderProgressTime = this.sliderProgressToTime(this.sliderValue, this.songLength);
-            },
-
-            /*
-            * Convert slider value to time
-            */
-            secondsToDuration(seconds) {
-                var minutes = Math.floor(seconds / 60).toFixed(0),
-                    seconds = Math.floor(seconds % 60).toFixed(0);
-
-                return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-            },
-
-            /*
-            * Slider progress value to time
-            */
-            sliderProgressToTime(sliderValue, songLength) {
-                return this.secondsToDuration((songLength / 100) * sliderValue);
+        <script>
+            let expenses = [];
+            document.getElementById('addExpense')
+                .addEventListener('click', function () {
+                    const expenseAmount = parseFloat(document
+                        .getElementById('expenseAmount')
+                        .value);
+                    const expenseCategory = document
+                        .getElementById('expenseCategory')
+                        .value;
+                    if (!isNaN(expenseAmount) && expenseCategory) {
+                        expenses.push({
+                            amount: expenseAmount,
+                            category: expenseCategory
+                        });
+                        renderExpenseList();
+                    } else {
+                        alert(`Please enter a valid expense 
+							amount and select a category.`);
+                    }
+                });
+            function renderExpenseList() {
+                const expenseListElement = document.getElementById('expenseList');
+                expenseListElement.innerHTML = '';
+                let totalExpenses = 0;
+                expenses.forEach(expense => {
+                    const expenseItem = document.createElement('div');
+                    expenseItem.textContent = `${expense.category}: 
+				$${expense.amount.toFixed(2)}`;
+                    expenseListElement.appendChild(expenseItem);
+                    totalExpenses += expense.amount;
+                });
+                document.getElementById('totalExpenses')
+                    .textContent = `$${totalExpenses.toFixed(2)}`;
             }
-        }
-    }
-</script>
+
+            document.getElementById('budgetForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const income = parseFloat(document.getElementById('income').value);
+                const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+                if (!isNaN(income)) {
+                    const savings = income - totalExpenses;
+                    document.getElementById('savings').textContent = `Savings: $${savings.toFixed(2)}`;
+                } else {
+                    document.getElementById('savings').textContent = "Please enter a valid income amount.";
+                }
+            });
+
+            document.getElementById('labels-range-input').addEventListener('input', function () {
+                const slider = document.getElementById('labels-range-input');
+                const minBalance = parseFloat(document.getElementById('min_balance').value);
+                const costOfItem = parseFloat(document.getElementById('cost_of_item').value);
+                const currentValue = parseFloat(slider.value);
+                const accountBalance = 1500; // Example account balance, replace with actual value
+                const remainingBalance = accountBalance - currentValue;
+
+                if (remainingBalance < minBalance) {
+                    slider.style.setProperty('--range-value', `${((currentValue - slider.min) / (slider.max - slider.min)) * 100}%`);
+                    slider.classList.add('slider-red');
+                    slider.classList.remove('slider-green');
+                } else {
+                    slider.style.setProperty('--range-value', `${((currentValue - slider.min) / (slider.max - slider.min)) * 100}%`);
+                    slider.classList.add('slider-green');
+                    slider.classList.remove('slider-red');
+                }
+            });
+
+
+        </script>
 </body>
+
 </html>

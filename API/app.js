@@ -10,6 +10,7 @@ app.use(express.json());
 
 const user_controller = require("../API/Controllers/user_controller");
 app.use('/users', user_controller);
+
 app.get('/', (req, res) => {
 
     res.send("This is working");

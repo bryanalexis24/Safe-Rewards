@@ -10,8 +10,10 @@ app.use(express.json());
 
 const user_controller = require("../API/Controllers/user_controller");
 app.use('/users', user_controller);
+
 const budget_controller = require("../API/Controllers/budget_controller");
 app.use('/budget', budget_controller);
+
 app.get('/', (req, res) => {
 
     res.send("This is working");

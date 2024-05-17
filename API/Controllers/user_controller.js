@@ -25,10 +25,26 @@ router.post('/', (req, res) => {
     name: req.body.name,
     password: req.body.password,  // In a real application, hash the password
     email: req.body.email,
-    balance : 11250,
+    balance: 11250,
   };
   users.push(newUser);
   res.status(201).json(newUser);
+});
+
+// Route to handle user login
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // Find user by email
+  const user = users.find(user => user.email === email);
+
+  if (!user || user.password !== password) {
+    // Invalid credentials
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  // Authentication successful
+  res.json({ message: 'Login successful' });
 });
 
 module.exports = router;
